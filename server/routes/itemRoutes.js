@@ -18,3 +18,4 @@ router.put('/:id', updateItem)
 // delete item
 router.delete('/:id', auth, deleteItem)
 
+module.exports = router
