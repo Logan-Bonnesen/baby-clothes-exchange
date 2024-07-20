@@ -10,9 +10,9 @@ router.post('/', auth, createComment)
 router.get('/item/:itemId', getCommentsByItemId)
 
 // update a comment 
-router.put('/:id', auth, updateComment)
+router.put('/:commentId', auth, updateComment)
 
 // delete a comment
-router.delete('/:id', deleteComment)
+router.delete('/:commentId', auth, deleteComment)
 
 module.exports = router
