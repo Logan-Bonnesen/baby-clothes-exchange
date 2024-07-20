@@ -39,8 +39,10 @@ exports.getCommentsByItemId = async (req, res) => {
 
 // update a comment
 exports.updateComment = async (req, res) => {
+    const { text } = req.body
+
     try {
-        const comment = await Comment.findById(req.params.id)
+        let comment = await Comment.findById(req.params.commentId)
         if (!comment) {
             return res.status(404).json({ msg: 'Comment not found' })
         }
@@ -61,7 +63,7 @@ exports.updateComment = async (req, res) => {
 // delete a comment
 exports.deleteComment = async (req, res) => {
     try {
-        const comment = await Comment.findById(req.params.id)
+        let comment = await Comment.findById(req.params.commentId)
         if (!comment) {
             return res.status(404).json({ msg: 'Comment not found' })
         }
