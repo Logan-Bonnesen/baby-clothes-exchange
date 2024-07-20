@@ -48,6 +48,10 @@ exports.getItemById = async (req, res) => {
 
 // update item
 exports.updateItem = async (req, res) => {
+    console.log('Req params:', req.params)
+    console.log('Req body:', req.body)
+
+
     const { title, description, size, color, condition, availability } = req.body
     try {
         let item = await Item.findById(req.params.id)
@@ -65,7 +69,7 @@ exports.updateItem = async (req, res) => {
         res.json(item)
     } catch (err) { 
         console.error(err.message)
-        res.status(500).send('Server error')
+        res.status(500).send('Server error 1')
     }
 }
 
@@ -79,7 +83,7 @@ exports.deleteItem = async (req, res) => {
         if (item.user.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'User not authorized' })
         }
-        await item.remove()
+        await Item.deleteOne({ _id: req.params.id })
         res.json({ msg: 'Item removed'})
     } catch (err) {
         console.error(err.message)

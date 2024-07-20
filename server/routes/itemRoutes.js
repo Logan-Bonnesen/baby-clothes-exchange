@@ -13,7 +13,7 @@ router.get('/', getItems)
 router.get('/:id', getItemById)
 
 // update item
-router.put('/:id', updateItem)
+router.put('/:id', auth, updateItem)
 
 // delete item
 router.delete('/:id', auth, deleteItem)
