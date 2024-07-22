@@ -26,7 +26,7 @@ const Login = () => {
                     />
                 </label>
                 <label>
-                    Passwprd:
+                    Password:
                     <input
                     type="password"
                     value={password}
