@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchItems, addItem, deleteItem, updateItem } from '../actions/itemActions'
+import UpdateItemModal from './UpdateItemModal';
 
 const Items = () => {
     const dispatch = useDispatch()
     const { items, loading } = useSelector(state => state.items)
 
     const [newItem, setNewItem] = useState({
-        name: '',
         description: '',
-        price: 0
+        size: '',
+        color: '',
+        condition: '',
+        availability: '',
     })
+
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         dispatch(fetchItems())
@@ -27,9 +33,11 @@ const Items = () => {
         e.preventDefault()
         dispatch(addItem(newItem))
         setNewItem({
-            name: '',
             description: '',
-            price: 0
+            size: '',
+            color: '',
+            condition: '',
+            availability: '',
         })
     }
 
@@ -37,10 +45,20 @@ const Items = () => {
         dispatch(deleteItem(id))
     }
 
-    const handleUpdateItem = (id) => {
-        const updatedItem = { ...newItem }
-        dispatch(updateItem(id, updatedItem))
+    const handleUpdateItem = (item) => {
+        dispatch(updateItem(item._id, item));
+        setSelectedItem(null);
+        setIsModalOpen(false);
     }
+
+    const openUpdateModal = (item) => {
+        setSelectedItem(item);
+        setIsModalOpen(true);
+    };
+
+    const closeUpdateModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <div>
@@ -50,17 +68,7 @@ const Items = () => {
             ) : (
                 <div>
                     <form onSubmit={handleAddItem}>
-                        <label>
-                            Name:
-                            <input
-                                type="text"
-                                name="name"
-                                value={newItem.name}
-                                onChange={handleChange}
-                                required
-                            />
-                        </label>
-                        <label>
+                    <label>
                             Description:
                             <textarea
                                 name="description"
@@ -70,28 +78,72 @@ const Items = () => {
                             />
                         </label>
                         <label>
-                            Price:
+                            Size:
                             <input
-                                type="number"
-                                name="price"
-                                value={newItem.price}
+                                type="text"
+                                name="size"
+                                value={newItem.size}
                                 onChange={handleChange}
                                 required
                             />
+                        </label>
+                        <label>
+                            Color:
+                            <input
+                                type="text"
+                                name="color"
+                                value={newItem.color}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            Condition:
+                            <input
+                                type="text"
+                                name="condition"
+                                value={newItem.condition}
+                                onChange={handleChange}
+                                required
+                            />
+                        </label>
+                        <label>
+                            Availability:
+                            <select
+                                name="availability"
+                                value={newItem.availability}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Select availability</option>
+                                <option value="For Sale">For Sale</option>
+                                <option value="For Trade">For Trade</option>
+                                <option value="Requested">Requested</option>
+                            </select>
                         </label>
                         <button type="submit">Add Item</button>
                     </form>
                     <ul>
                         {items.map(item => (
                             <li key={item._id}>
-                                <p><strong>Name:</strong> {item.name}</p>
                                 <p><strong>Description:</strong> {item.description}</p>
-                                <p><strong>Price:</strong> ${item.price}</p>
+                                <p><strong>Size:</strong> {item.size}</p>
+                                <p><strong>Color:</strong> {item.color}</p>
+                                <p><strong>Condition:</strong> {item.condition}</p>
+                                <p><strong>Availability:</strong> {item.availability}</p>
                                 <button onClick={() => handleDeleteItem(item._id)}>Delete</button>
-                                <button onClick={() => handleUpdateItem(item._id)}>Update</button>
+                                <button onClick={() => openUpdateModal(item)}>Update</button>
                             </li>
                         ))}
                     </ul>
+                    {isModalOpen && (
+                        <UpdateItemModal 
+                            isOpen={isModalOpen}
+                            onClose={closeUpdateModal}
+                            item={selectedItem}
+                            onUpdate={handleUpdateItem}
+                        />
+                    )}
                 </div>
             )}
         </div>
