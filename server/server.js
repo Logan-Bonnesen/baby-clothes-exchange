@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
@@ -11,6 +12,13 @@ dotenv.config()
 
 const app = express()
 
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow requests only from this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+};
+
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 connectDB()
