@@ -9,10 +9,27 @@ import {
     AUTH_ERROR
 } from './actionTypes'
 
+const API_URL = process.env.REACT_APP_API_URL
+
+console.log("API_URL:", API_URL);
+
+
+
 // load user
 export const loadUser = () => async dispatch => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+        dispatch({
+            type: AUTH_ERROR
+        })
+        return;
+    }
     try {
-        const res = await axios.get('/api/auth')
+        const res = await axios.get(`${API_URL}/users`, {
+            headers: {
+                'x-auth-token': token
+            }
+        })
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -27,7 +44,9 @@ export const loadUser = () => async dispatch => {
 // register user
 export const register = (formData) => async dispatch => {
     try {
-        const res = await axios.post('/api/users/register', formData)
+        const res = await axios.post(`${API_URL}/users/register`, formData)
+        localStorage.setItem('token', res.data.token)
+        
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -35,6 +54,7 @@ export const register = (formData) => async dispatch => {
         // load user after registration
         dispatch(loadUser())
     } catch (err) {
+        console.error("registration error:", err.response.data)
         dispatch({
             type: REGISTER_FAIL
         })
@@ -44,7 +64,7 @@ export const register = (formData) => async dispatch => {
 // login user
 export const login = (formData) => async dispatch => {
     try {
-        const res = await axios.get('/api/users/login', formData)
+        const res = await axios.post(`${API_URL}/users/login`, formData)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -60,5 +80,6 @@ export const login = (formData) => async dispatch => {
 
 // logout user
 export const logout = () => dispatch => {
+    localStorage.removeItem('token')
     dispatch({ type: LOGOUT })
 }
