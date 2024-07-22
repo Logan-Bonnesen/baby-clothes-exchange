@@ -2,11 +2,10 @@ const Item = require('../models/Item')
 
 // create new item
 exports.createItem = async (req, res) => {
-    const { title, description, size, color, condition, availability } = req.body
+    const { description, size, color, condition, availability } = req.body
     try {
         const newItem = new Item({
             user: req.user.id,
-            title,
             description, 
             size,
             color, 
@@ -52,7 +51,7 @@ exports.updateItem = async (req, res) => {
     console.log('Req body:', req.body)
 
 
-    const { title, description, size, color, condition, availability } = req.body
+    const { description, size, color, condition, availability } = req.body
     try {
         let item = await Item.findById(req.params.id)
         if (!item) {
@@ -63,7 +62,7 @@ exports.updateItem = async (req, res) => {
         }
         item = await Item.findByIdAndUpdate(
             req.params.id, 
-            { $set: { title, description, size, color, condition, availability } },
+            { $set: { description, size, color, condition, availability } },
             { new: true }
         )
         res.json(item)
