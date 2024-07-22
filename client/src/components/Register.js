@@ -7,10 +7,11 @@ const Register = () => {
         name: '',
         email: '',
         password: '',
-        password2: ''
+        password2: '',
+        location: ''
     });
 
-    const { name, email, password, password2 } = formData;
+    const { name, email, password, password2, location } = formData;
     const dispatch = useDispatch()
 
     const handleChange = (e) => {
@@ -25,7 +26,7 @@ const Register = () => {
         if (password !== password2) {
             alert('Passwords do not match')
         } else {
-            dispatch(register({ name, email, password }))
+            dispatch(register({ name, email, password, location }))
         }
     }
 
@@ -49,6 +50,16 @@ const Register = () => {
                         type="email"
                         name="email"
                         value={email}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Location:
+                    <input
+                        type="text"
+                        name="location"
+                        value={location}
                         onChange={handleChange}
                         required
                     />
