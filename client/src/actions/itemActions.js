@@ -1,4 +1,4 @@
-import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, ITEM_LOADING } from './actionTypes';
+import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, ITEM_LOADING, GET_USER_ITEMS, ITEMS_ERROR } from './actionTypes';
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -18,6 +18,23 @@ export const fetchItems = () => async dispatch => {
         console.error(err.message)
     }
 }
+
+export const getUserItems = () => async dispatch => {
+    try {
+        const res = await axios.get(`${API_URL}/items/user`, {
+            headers: { 'x-auth-token': localStorage.getItem('token') }
+        });
+        dispatch({
+            type: GET_USER_ITEMS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: ITEMS_ERROR,
+            payload: err.response.statusText
+        });
+    }
+};
 
 // add item
 export const addItem = (itemData) => async dispatch => {
