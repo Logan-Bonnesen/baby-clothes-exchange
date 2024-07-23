@@ -1,4 +1,4 @@
-import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, ITEM_LOADING } from '../actions/actionTypes';
+import { FETCH_ITEMS, ADD_ITEM, DELETE_ITEM, UPDATE_ITEM, ITEM_LOADING, GET_USER_ITEMS } from '../actions/actionTypes';
 
 const initialState = {
   items: [], // Array of items fetched from the server
@@ -20,11 +20,17 @@ const itemReducer = (state = initialState, action) => {
                 items: action.payload, // update items with the payload of the action
                 loading: false,
             }
+        case GET_USER_ITEMS: 
+            return {
+                ...state,
+                items: action.payload,
+                loading: false
+            };
 
         case ADD_ITEM:
             return {
                 ...state, 
-                items: [action.payload, ...state.items],  // Add new item to the beginning of the items array
+                items: [action.payload, ...state.items],  
                 loading: false,
             }
         
