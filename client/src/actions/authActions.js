@@ -18,6 +18,8 @@ console.log("API_URL:", API_URL);
 // load user
 export const loadUser = () => async dispatch => {
     const token = localStorage.getItem('token')
+    
+
     if (!token) {
         dispatch({
             type: AUTH_ERROR
@@ -30,11 +32,13 @@ export const loadUser = () => async dispatch => {
                 'x-auth-token': token
             }
         })
+        console.log('User Data:', res.data); 
         dispatch({
             type: USER_LOADED,
             payload: res.data
         })
     } catch (err) {
+        console.error('Load User Error:', err); 
         dispatch({
             type: AUTH_ERROR
         })
@@ -65,6 +69,7 @@ export const register = (formData) => async dispatch => {
 export const login = (formData) => async dispatch => {
     try {
         const res = await axios.post(`${API_URL}/users/login`, formData)
+        localStorage.setItem('token', res.data.token)
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
