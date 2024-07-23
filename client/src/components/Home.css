@@ -1,0 +1,56 @@
+/* Home.css */
+.home {
+    text-align: center;
+}
+
+.hero {
+    background-color: #395480; /* Deep blue */
+    color: #ffffff;
+    padding: 50px 20px;
+    /* background-image: url('/path/to/hero-image.jpg'); Optional background image */
+    background-size: cover;
+    background-position: center;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+.hero button {
+    background-color: #f0584b; /* Bright red */
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.hero button:hover {
+    background-color: #e94e4a; /* Slightly darker red */
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.feature {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.feature h2 {
+    color: #395480; /* Deep blue */
+}
+
+.feature p {
+    color: #333;
+}

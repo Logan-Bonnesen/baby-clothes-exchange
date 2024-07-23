@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { login } from '../actions/authActions'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        dispatch(login({ email, password }))
+
+        try {
+            await dispatch(login({ email, password }))
+            navigate('/')
+        } catch (err) {
+            console.error('Login failed:', err)
+        }
     }
 
     return (
