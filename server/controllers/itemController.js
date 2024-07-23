@@ -31,6 +31,17 @@ exports.getItems = async (req, res) => {
     }
 }
 
+// get items by user
+exports.getItemsByUser = async (req, res) => {
+    try {
+        const items = await Item.find({ user: req.user.id }).populate('user', ['name', 'location']);
+        res.json(items);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+};
+
 // get item by ID
 exports.getItemById = async (req, res) => {
     try { 
