@@ -7,6 +7,7 @@ const connectDB = require('./config/db')
 const userRoutes = require('./routes/userRoutes')
 const itemRoutes = require('./routes/itemRoutes')
 const commentRoutes = require('./routes/commentRoutes')
+const path = require('path')
 
 dotenv.config()
 
@@ -17,6 +18,11 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 };
+
+app.use(express.static(path.join(__dirname, 'client/build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+})
 
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
