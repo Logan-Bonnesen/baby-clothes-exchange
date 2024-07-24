@@ -1,6 +1,6 @@
-# Baby Clothes Marketplace
+# Baby Clothes Exchange
 
-Welcome to the Baby Clothes Marketplace! This application is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to facilitate the buying, trading, and requesting of baby clothes. Users can post clothing items, search for specific styles, and view items based on their location.
+Welcome to the Baby Clothes Exchange! This application is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to facilitate the buying, trading, and requesting of baby clothes. Users can post clothing items, search for specific styles, and view items based on their location.
 
 ## Features
 
@@ -30,8 +30,8 @@ Welcome to the Baby Clothes Marketplace! This application is a full-stack MERN (
 1. **Clone the Repository**
 
     ```bash
-    git clone https://github.com/yourusername/baby-clothes-marketplace.git
-    cd baby-clothes-marketplace
+    git clone https://github.com/yourusername/baby-clothes-exchange.git
+    cd baby-clothes-exchange
     ```
 
 2. **Install Backend Dependencies**
